@@ -6,6 +6,7 @@
 #include <QMediaPlayer>
 #include <QTimer>
 #include <QDir>
+#include <QList>
 
 
 enum MusicMode
@@ -14,6 +15,10 @@ enum MusicMode
     SINGLE_MODE,
     RANDOM_MODE
 };
+
+QList<int> randLsit;
+int randIndex = 0;
+
 
 struct MusicPlayer
 {
@@ -37,12 +42,11 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("音乐播放器");
     this->setWindowIcon(QIcon(":/3.png"));
 
-    QPixmap background(":/5.png");
+    // QPixmap background(":/5.png");
     // background.scaled(this->size(), Qt::IgnoreAspectRatio);
-    
-    QPalette palette;
-    palette.setBrush(backgroundRole(), background);
-    this->setPalette(palette);
+    // QPalette palette;
+    // palette.setBrush(backgroundRole(), background);
+    // this->setPalette(palette);
 
     // 设置图片及修改大小
     // QPixmap post =  QPixmap(":/2.png");
@@ -57,15 +61,15 @@ MainWindow::MainWindow(QWidget *parent)
     // player->play();
 
 
+    ui->lrc_label->setText("");
+    ui->lrc_label_2->setText("");
+    ui->volumeLabel->setText("100");
     ui->PrevButton->setIcon(QIcon(":/Prev.png"));
-    ui->PrevButton->setObjectName("PrevButton");
     ui->PlayButton->setIcon(QIcon(":/Play.png"));
-    ui->PlayButton->setObjectName("PlayButton");
     ui->NextButton->setIcon(QIcon(":/Next.png"));
-    ui->NextButton->setObjectName("NextButton");
     ui->modeButton->setText("列表循环");
-    ui->modeButton->setObjectName("modeButton");
     ui->verticalSlider->setMaximum(100);
+    ui->verticalSlider->setMinimum(0);
     ui->verticalSlider->setValue(100);
 
     LoadListFromDir(mp->DirPath);
@@ -248,6 +252,7 @@ void MainWindow::ChangeLRC()
 void MainWindow::ChangeVolume()
 {
     float volume = ui->verticalSlider->value();
+    ui->volumeLabel->setText(QString::number(volume));
     mp->audioOutput->setVolume(volume / 100.0);
     qDebug() << volume;
 }
@@ -291,13 +296,35 @@ void MainWindow::ItemDoubleClicked()
     PlayMusic();
 }
 
+void makeRandList(const int& size)
+{
+    srand(time(NULL));
+    randLsit.clear();
+    QList<int> list;
+    for(int i = 0; i < size; i++)
+    {
+        list.append(i);
+    }
+    for(int i = 0; i < size; i++)
+    {
+        int index = rand() % list.size();
+        randLsit.append(list[index]);
+        list.removeAt(index);
+    }
+
+}
+
 void MainWindow::PreMusic()
 {   int index;
     if(mp->mode == RANDOM_MODE)
     {
-        srand(time(NULL));
-        index = rand() % ui->listWidget->count();
-        return;
+        if(randIndex == 0)
+        {
+            makeRandList(ui->listWidget->count());
+        }
+        
+        index = randLsit[randIndex];
+        randIndex = (randIndex + 5) % ui->listWidget->count();
     }
     else
     {
@@ -312,9 +339,14 @@ void MainWindow::NextMusic()
 {   int index;
     if(mp->mode == RANDOM_MODE)
     {
-        srand(time(NULL));
-        index = rand() % ui->listWidget->count();
-        return;
+        if(randIndex == 0)
+        {
+            makeRandList(ui->listWidget->count());
+        }
+        
+        index = randLsit[randIndex];
+        // qDebug() << randIndex << "\n";
+        randIndex = (randIndex + 1) % ui->listWidget->count();
     }
     else
     {
