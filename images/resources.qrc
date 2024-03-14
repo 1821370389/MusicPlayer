@@ -1,0 +1,13 @@
+<RCC>
+    <qresource prefix="/">
+        <file>2.png</file>
+        <file>3.png</file>
+        <file>resources.qrc</file>
+        <file>Next.png</file>
+        <file>Pause.png</file>
+        <file>Play.png</file>
+        <file>Prev.png</file>
+        <file>THE ANSWER.mp3</file>
+        <file>THE ANSWER.lrc</file>
+    </qresource>
+</RCC>
