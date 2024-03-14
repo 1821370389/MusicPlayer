@@ -1,7 +1,9 @@
 QWidget#MainWindow
 {
     /* background-color:#111; */
-    background-image: url("./images/5.png");
+    background-image: url(":./5.png");
+    background-repeat: no-repeat;
+    background-position: center;
 }
 
 QPushButton#login
@@ -45,7 +47,7 @@ QListWidget
 QListWidget::item
 {
     border: none;
-    background-color: rgba(from #66ccff, 0.3);
+    background-color: rgba(31, 242, 249, 0.3);
     selection-color: rgb(120,255,100);
     selection-background-color: #fff;
 }
