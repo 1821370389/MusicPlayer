@@ -37,6 +37,13 @@ MainWindow::MainWindow(QWidget *parent)
     this->setWindowTitle("音乐播放器");
     this->setWindowIcon(QIcon(":/3.png"));
 
+    QPixmap background(":/5.png");
+    // background.scaled(this->size(), Qt::IgnoreAspectRatio);
+    
+    QPalette palette;
+    palette.setBrush(backgroundRole(), background);
+    this->setPalette(palette);
+
     // 设置图片及修改大小
     // QPixmap post =  QPixmap(":/2.png");
     // ui->label->setPixmap(post.scaled(ui->label->width(),ui->label->height()));
@@ -51,9 +58,13 @@ MainWindow::MainWindow(QWidget *parent)
 
 
     ui->PrevButton->setIcon(QIcon(":/Prev.png"));
+    ui->PrevButton->setObjectName("PrevButton");
     ui->PlayButton->setIcon(QIcon(":/Play.png"));
+    ui->PlayButton->setObjectName("PlayButton");
     ui->NextButton->setIcon(QIcon(":/Next.png"));
+    ui->NextButton->setObjectName("NextButton");
     ui->modeButton->setText("列表循环");
+    ui->modeButton->setObjectName("modeButton");
     ui->verticalSlider->setMaximum(100);
     ui->verticalSlider->setValue(100);
 

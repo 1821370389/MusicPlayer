@@ -1,0 +1,6 @@
+<RCC>
+    <qresource prefix="/">
+        <file>passwd.png</file>
+        <file>qq.png</file>
+    </qresource>
+</RCC>
