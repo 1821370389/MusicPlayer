@@ -27,6 +27,7 @@ struct MusicPlayer
     // std::map<int,QString> LRCMap; // 歌词列表
     std::multimap<int,QString> LRCMap;  // 双语列表
     QTimer timer; // 歌词定时器
+    // QTimer volumeTimer;
     QString DirPath;    // 路径
     int mode;           // 播放模式
 };
@@ -85,6 +86,31 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->verticalSlider, &QSlider::sliderMoved, this, &MainWindow::ChangeVolume);
     connect(&mp->timer, &QTimer::timeout, this, &MainWindow::ChangeLRC);
     connect(ui->listWidget, &QListWidget::doubleClicked, this, &MainWindow::ItemDoubleClicked);
+
+    // mp->volumeTimer.setInterval(3000);
+    // mp->volumeTimer.setSingleShot(true);
+    
+    // // ui->verticalSlider->hide();
+    // mp->volumeTimer.start();
+    // connect(&mp->volumeTimer, &QTimer::timeout, [&]()
+    // {
+    //     ui->verticalSlider->hide();
+    // });
+    // connect(ui->verticalSlider, &QSlider::valueChanged, [&]()
+    // {
+    //     ui->verticalSlider->show();
+    //     mp->volumeTimer.stop();
+    //     mp->volumeTimer.start();
+    // });
+    // connect(ui->volumeLabel, &QLabel::leaveEvent,[&]()
+    // {
+    //     mp->volumeTimer.start();
+    // });
+    // connect(ui->volumeLabel, &QLabel::enterEvent,[&]()
+    // {
+    //     ui->verticalSlider->show();
+    //     mp->volumeTimer.stop();
+    // });
 
 }
 
