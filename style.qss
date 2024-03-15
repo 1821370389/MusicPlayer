@@ -61,17 +61,18 @@ QSlider::groove:horizontal{
 		left: 0px; 
 		right: 0px; 
 		border:0px;    /*指定无边框*/
-	    border-radius:6px;    /*指定圆角*/
+	    border-radius:5px;    /*指定圆角*/
 		background:rgba(0,0,0,50);
  } 
  /* //滑块的美化 */
  QSlider::handle:horizontal{ 
-		width:  50px; 
-		height: 50px; 
-		margin-top: -20px; 
+		width:  10px; 
+		height: 30px; 
+		margin-top: 3px; 
 		margin-left: 0px; 
-		margin-bottom: -20px; 
+		margin-bottom: 3px; 
 		margin-right: 0px; 
+        background-color: darkred;
  		/* border-image:url(:/res/images/setting_slider_handle.png); */
 } 
 /* //已滑过的进度美化 */

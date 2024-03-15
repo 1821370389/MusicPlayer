@@ -296,7 +296,7 @@ void MainWindow::ItemDoubleClicked()
     PlayMusic();
 }
 
-void makeRandList(const int& size)
+void MainWindow::makeRandList(const int& size)
 {
     srand(time(NULL));
     randLsit.clear();
@@ -305,7 +305,7 @@ void makeRandList(const int& size)
     {
         list.append(i);
     }
-    for(int i = 0; i < size; i++)
+        for(int i = 0; i < size; i++)
     {
         int index = rand() % list.size();
         randLsit.append(list[index]);
@@ -322,12 +322,12 @@ void MainWindow::PreMusic()
         {
             makeRandList(ui->listWidget->count());
         }
-        
-        index = randLsit[randIndex];
-        randIndex = (randIndex + 5) % ui->listWidget->count();
+        randIndex = randIndex - 1 < 0 ? ui->listWidget->count() - 1 : randIndex - 1;
+        index = randLsit[randIndex % ui->listWidget->count()];
     }
     else
     {
+        randIndex = 0;
         index = ui->listWidget->currentRow();
         index = index - 1 < 0 ? ui->listWidget->count() - 1 : index - 1;
     }
@@ -344,12 +344,11 @@ void MainWindow::NextMusic()
             makeRandList(ui->listWidget->count());
         }
         
-        index = randLsit[randIndex];
-        // qDebug() << randIndex << "\n";
-        randIndex = (randIndex + 1) % ui->listWidget->count();
+        index = randLsit[++randIndex % ui->listWidget->count()];
     }
     else
     {
+        randIndex = 0;
         index = ui->listWidget->currentRow();
         index = index + 1 >= ui->listWidget->count() ? 0 : index + 1;
     }

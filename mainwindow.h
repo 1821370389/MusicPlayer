@@ -19,6 +19,7 @@ public:
     ~MainWindow();    
     void SetLRC(const QString& path);
     void LoadListFromDir(const QString& path);     // 从本地文件中加载歌单
+    void makeRandList(const int& size);
 public slots:
     void PlayMusic();
     void SetDurationTime();
