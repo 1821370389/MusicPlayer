@@ -1,6 +1,6 @@
 #include "mainwindow.h"
 #include "login.h"
-
+#include "rotateimagewidget.h"
 #include <QApplication>
 #include <QLocale>
 #include <QTranslator>
@@ -21,6 +21,7 @@ int main(int argc, char *argv[])
         }
     }
     */
+    /**/
     MainWindow w;
     w.show();
     // Login l;
@@ -33,6 +34,10 @@ int main(int argc, char *argv[])
         qApp->setStyleSheet(qssfile.readAll());
         qssfile.close();
     }
+
+    // RotateImageWidget w;
+    // w.setPixmap(QPixmap(":/5.png"));
+    // w.show();
 
     // 时间循环：死循环
     return a.exec();

@@ -1,4 +1,5 @@
 #include "mainwindow.h"
+#include "rotateimagewidget.h"
 #include "./ui_mainwindow.h"
 #include <QFile>
 #include <QDebug>
@@ -64,6 +65,8 @@ MainWindow::MainWindow(QWidget *parent)
 
     ui->lrc_label->setText("");
     ui->lrc_label_2->setText("");
+    ui->lrc_label->setMaximumSize(ui->lrc_label_2->size());
+    ui->lrc_label_2->setMaximumSize(ui->label->size());
     ui->volumeLabel->setText("100");
     ui->PrevButton->setIcon(QIcon(":/Prev.png"));
     ui->PlayButton->setIcon(QIcon(":/Play.png"));
@@ -131,6 +134,7 @@ void MainWindow::PlayMusic()
     {
         mp->player->pause();
         ui->PlayButton->setIcon(QIcon(":/Play.png"));
+        ui->widget->stopTimer();
         qDebug() << "pause";
         mp->timer.stop();
     }
@@ -138,6 +142,7 @@ void MainWindow::PlayMusic()
     {
         mp->player->play();
         ui->PlayButton->setIcon(QIcon(":/Pause.png"));
+        ui->widget->startTimer();
         qDebug() << "play";
         mp->timer.start(500);
     }
@@ -316,7 +321,9 @@ void MainWindow::ItemDoubleClicked()
     }
     else
     {
-        ui->label->setPixmap(QPixmap(postPath).scaled(ui->label->width(),ui->label->width()));
+        QPixmap pix(postPath);
+        ui->widget->setPixmap(pix.scaled(ui->label->width(),ui->label->width()));
+        ui->label->setPixmap(pix.scaled(ui->label->width(),ui->label->width()));
     }
 
     PlayMusic();
