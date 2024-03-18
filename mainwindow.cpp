@@ -8,7 +8,11 @@
 #include <QTimer>
 #include <QDir>
 #include <QList>
-
+#include "networkconfig.h"
+#include <memory>
+#include <iostream>
+#include <QTcpSocket>
+#include <QHostAddress>
 
 enum MusicMode
 {
@@ -31,6 +35,10 @@ struct MusicPlayer
     // QTimer volumeTimer;
     QString DirPath;    // 路径
     int mode;           // 播放模式
+
+    // 客户端
+    std::shared_ptr<NetworkConfig> net;
+    std::shared_ptr<QTcpSocket> socket;
 };
 
 MainWindow::MainWindow(QWidget *parent)
@@ -90,30 +98,12 @@ MainWindow::MainWindow(QWidget *parent)
     connect(&mp->timer, &QTimer::timeout, this, &MainWindow::ChangeLRC);
     connect(ui->listWidget, &QListWidget::doubleClicked, this, &MainWindow::ItemDoubleClicked);
 
-    // mp->volumeTimer.setInterval(3000);
-    // mp->volumeTimer.setSingleShot(true);
-    
-    // // ui->verticalSlider->hide();
-    // mp->volumeTimer.start();
-    // connect(&mp->volumeTimer, &QTimer::timeout, [&]()
-    // {
-    //     ui->verticalSlider->hide();
-    // });
-    // connect(ui->verticalSlider, &QSlider::valueChanged, [&]()
-    // {
-    //     ui->verticalSlider->show();
-    //     mp->volumeTimer.stop();
-    //     mp->volumeTimer.start();
-    // });
-    // connect(ui->volumeLabel, &QLabel::leaveEvent,[&]()
-    // {
-    //     mp->volumeTimer.start();
-    // });
-    // connect(ui->volumeLabel, &QLabel::enterEvent,[&]()
-    // {
-    //     ui->verticalSlider->show();
-    //     mp->volumeTimer.stop();
-    // });
+    // 网络
+    mp->net = std::make_shared<NetworkConfig>();
+    mp->net->ReadFromXML("D:\\ProgramData\\VScode\\C++\\QT\\MusicPlayer\\Config\\Config.xml");
+    mp->socket = std::make_shared<QTcpSocket>();
+    connect(ui->pushButton_change, &QPushButton::clicked, this, &MainWindow::NetWorkModify);
+    connect(ui->pushButton_connect, &QPushButton::clicked, this, &MainWindow::networkConnect);
 
 }
 
@@ -428,4 +418,22 @@ void MainWindow::SetPlayState()
             NextMusic();
         }
     }
+}
+
+void MainWindow::NetWorkModify()
+{
+    mp->net->show();
+}
+
+void MainWindow::networkConnect()
+{
+    // mp->socket->disconnectFromHost();
+    auto pair = mp->net->GetNetWorkConfig();
+    mp->socket->connectToHost(QHostAddress(pair.first), pair.second);
+    connect(mp->socket.get(), &QTcpSocket::connected, this, &MainWindow::socketConnected);
+}
+
+void MainWindow::socketConnected()
+{
+    qDebug()<<"链接成功";
 }

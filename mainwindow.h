@@ -32,6 +32,9 @@ public slots:
     void ChangeMode();
     void SetPlayState();
 
+    void NetWorkModify();
+    void networkConnect();
+    void socketConnected();
 private:
     Ui::MainWindow *ui;
     MusicPlayer *mp;
