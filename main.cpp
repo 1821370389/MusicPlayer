@@ -22,10 +22,10 @@ int main(int argc, char *argv[])
     }
     */
     /**/
-    MainWindow w;
-    w.show();
-    // Login l;
-    // l.show();
+    // MainWindow w;
+    // w.show();
+    Login l;
+    l.show();
 
     QFile qssfile(":/style.qss");
     if(qssfile.open(QIODevice::ReadOnly))

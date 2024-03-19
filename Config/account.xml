@@ -1,0 +1,15 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<users>
+ <user 自动登录="true" 记住密码="true">
+  <账号>122</账号>
+  <密码>125</密码>
+  <用户名>张三</用户名>
+  <头像>D:/ProgramData/VScode/C++/QT/MusicPlayer/images/picture.png</头像>
+ </user>
+ <user>
+  <账号>123</账号>
+  <密码>0</密码>
+  <用户名>李四</用户名>
+  <头像>D:/ProgramData/VScode/C++/QT/MusicPlayer/images/picture.png</头像>
+ </user>
+</users>

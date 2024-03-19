@@ -34,6 +34,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         images/resources.qrc
         login.h login.cpp login.ui
         images/qq.qrc
+        accountwifget.h accountwifget.cpp accountwifget.ui
 
 
     )
