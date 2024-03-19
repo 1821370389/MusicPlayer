@@ -64,7 +64,7 @@
        <item>
         <layout class="QHBoxLayout" name="horizontalLayout">
          <item>
-          <widget class="QCheckBox" name="checkBox">
+          <widget class="QCheckBox" name="checkBox_autoLogin">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -76,7 +76,7 @@
           </widget>
          </item>
          <item>
-          <widget class="QCheckBox" name="checkBox_2">
+          <widget class="QCheckBox" name="checkBox_remPasswd">
            <property name="font">
             <font>
              <pointsize>9</pointsize>
@@ -142,9 +142,6 @@
    </item>
   </layout>
  </widget>
- <resources>
-  <include location="images/QQ.qrc"/>
-  <include location="images/resources.qrc"/>
- </resources>
+ <resources/>
  <connections/>
 </ui>
