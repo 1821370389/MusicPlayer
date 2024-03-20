@@ -49,6 +49,16 @@ Login::Login(QWidget *parent)
     connect(ui->checkBox_remPasswd, &QCheckBox::stateChanged, this, &Login::on_checkBox_remPasswd_stateChanged);
     connect(ui->checkBox_autoLogin, &QCheckBox::stateChanged, this, &Login::on_checkBox_autoLogin_stateChanged);
     
+    connect(ui->loginButton, &QPushButton::clicked, [=](){
+        QDomElement root = p->doc.documentElement();
+        QDomElement type = p->doc.createElement("user");
+        QDomElement account1 = p->doc.createElement("账号");
+        QDomText accountText = p->doc.createTextNode(ui->lineEdit_account->text());
+        type.appendChild(account1);
+        account1.appendChild(accountText);
+        root.appendChild(account1);
+        WriteToXML(p->filePath);
+    });
 
     // 自动补全
 #if 0
@@ -223,6 +233,7 @@ bool Login::WriteToXML(const QString &filename)
     {
         qDebug() << p->doc.toByteArray();
         qDebug() << "file write error" + filename;
+        file.close();
         return false;
     }
     file.close();
