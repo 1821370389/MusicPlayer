@@ -26,7 +26,7 @@ RotateImageWidget::RotateImageWidget(const QPixmap &picture, QWidget *parent)
 {
     connect(&p->timer, &QTimer::timeout, this, &RotateImageWidget::UpdateScene);
     p->timer.setInterval(50);
-    p->picture = picture;
+    setPixmap(picture);
 }
 // 设置图片
 void RotateImageWidget::setPixmap(const QPixmap &picture)
@@ -76,7 +76,7 @@ void RotateImageWidget::paintEvent(QPaintEvent *e)
     painter.setClipPath(painterPath);
     painter.setTransform(transform, true);
 
-    painter.drawPixmap(-p->r,-p->r,this->width(),this->height(),p->picture);
+    painter.drawPixmap(-p->r, -p->r, p->r*2, p->r*2, p->picture);
 }
 // 当窗口大小变动时，重新计算圆心及圆的半径
 void RotateImageWidget::resizeEvent(QResizeEvent *event)
