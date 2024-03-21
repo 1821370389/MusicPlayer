@@ -1,5 +1,6 @@
 #include "networkconfig.h"
 #include "./ui_networkconfig.h"
+#include "xml.h"
 #include <QFile>
 #include <QDomDocument>
 #include <QDebug>
@@ -8,7 +9,7 @@
 struct configprivate
 {
     QDomDocument doc;   // xml文件对象
-    QString filePath;   // 文件路径
+    xml xp;             // xml对象
 };
 
 
@@ -29,24 +30,8 @@ NetworkConfig::~NetworkConfig()
 
 bool NetworkConfig::ReadFromXML(const QString &filename)
 {
-    p->filePath = filename;
-    QFile file(filename);
-    if(!file.open(QIODevice::ReadOnly | QIODevice::Text))
-    {
-        qDebug() << "file open error" + filename;
-        return false;
-    }
-    auto content = file.readAll();
-    file.close();
-
-    QString errorMsg;
-    int errorLine = 0, errorColumn = 0;
-    if (!p->doc.setContent(content, &errorMsg, &errorLine, &errorColumn)) 
-    {
-        qDebug() << "XML 解析错误:" << errorMsg << "at line" << errorLine << "column" << errorColumn;
-        return false;
-    }
-    qDebug() << "xml 解析成功";
+    p->xp.setFilePath(filename);
+    p->doc = p->xp.getDocument();
     auto root = p->doc.documentElement();
     for(auto childNode = root.firstChild(); childNode.isNull() == false; childNode = childNode.nextSibling())
     {
@@ -60,19 +45,7 @@ bool NetworkConfig::ReadFromXML(const QString &filename)
 }
 bool NetworkConfig::WriteToXML(const QString &filename)
 {
-    QFile file(filename);
-    if(!file.open(QIODevice::WriteOnly))
-    {
-        qDebug() << "file open error" + filename;
-        return false;
-    }
-    if (file.write(p->doc.toByteArray()) <= 0)
-    {
-        qDebug() << p->doc.toByteArray();
-        qDebug() << "file write error" + filename;
-        return false;
-    }
-    file.close();
+    p->xp.WriteToXML();
 
     return true;
 }
@@ -89,7 +62,7 @@ void NetworkConfig::accept()
     auto root = p->doc.documentElement();
     root.firstChildElement("ip").firstChild().setNodeValue(ui->lineEdit_ip->text());
     root.firstChildElement("port").firstChild().setNodeValue(ui->lineEdit_port->text());
-    WriteToXML(p->filePath);
+    WriteToXML("");
     this->close();
 }
 void NetworkConfig::reject()
