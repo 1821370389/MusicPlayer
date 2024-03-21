@@ -15,15 +15,29 @@ find_package(Qt${QT_VERSION_MAJOR} REQUIRED COMPONENTS Widgets LinguistTools Xml
 set(TS_FILES MusicPlayer_zh_CN.ts)
 
 set(PROJECT_SOURCES
+        # 主界面
         main.cpp
         mainwindow.cpp
         mainwindow.h
         mainwindow.ui
+        # 旋转专辑
         rotateimagewidget.cpp
         rotateimagewidget.h
+        # 网络配置
         networkconfig.cpp
         networkconfig.h
         networkconfig.ui
+        # qq账号匹配展示表
+        accountwifget.h 
+        accountwifget.cpp 
+        accountwifget.ui
+        # 登陆界面
+        login.h 
+        login.cpp 
+        login.ui
+        # xml使用
+        xml.cpp
+        xml.h
         ${TS_FILES}
 )
 
@@ -32,9 +46,7 @@ if(${QT_VERSION_MAJOR} GREATER_EQUAL 6)
         MANUAL_FINALIZATION
         ${PROJECT_SOURCES}
         images/resources.qrc
-        login.h login.cpp login.ui
         images/qq.qrc
-        accountwifget.h accountwifget.cpp accountwifget.ui
 
 
     )
